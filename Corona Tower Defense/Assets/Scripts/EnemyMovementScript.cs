@@ -14,6 +14,8 @@ public class EnemyMovementScript : MonoBehaviour
     void Start(){
         alveoli_path = Random.Range(1,7);
         Debug.Log(alveoli_path);
+        lungs_path = Random.Range(1,7);
+        animator.SetInteger("lungs_path", lungs_path);
     }
     
 
