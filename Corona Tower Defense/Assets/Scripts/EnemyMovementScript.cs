@@ -12,8 +12,9 @@ public class EnemyMovementScript : MonoBehaviour
     int alveoli_path;
 
     void Start(){
+
+        // setting random path for lungs and alveoli
         alveoli_path = Random.Range(1,7);
-        Debug.Log(alveoli_path);
         lungs_path = Random.Range(1,7);
         animator.SetInteger("lungs_path", lungs_path);
     }
@@ -24,7 +25,7 @@ public class EnemyMovementScript : MonoBehaviour
         animator.SetInteger("alveoli_path", alveoli_path);
     }
 
-    public void ReachedTheEnd(){
+    public void ReachedTheEnd(){ //when reaching the end of alveoli
         // increase humidity
 
         Destroy(gameObject);
