@@ -5,6 +5,8 @@ TagManager:
   serializedVersion: 2
   tags:
   - cameras
+  - Enemy
+  - WBC
   layers:
   - Default
   - TransparentFX
@@ -12,7 +14,7 @@ TagManager:
   - Background
   - Water
   - UI
-  - 
+  - WBC
   - 
   - 
   - 
@@ -44,4 +46,7 @@ TagManager:
     locked: 0
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: Towers
+    uniqueID: 2440255111
     locked: 0
