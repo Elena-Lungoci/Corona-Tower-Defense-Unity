@@ -703,6 +703,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1457987529}
   - component: {fileID: 1457987530}
+  - component: {fileID: 1457987531}
   m_Layer: 0
   m_Name: Logic
   m_TagString: Untagged
@@ -742,6 +743,18 @@ MonoBehaviour:
   enemy: {fileID: 6206175461309632662, guid: a7446d38d36cb724eb8de4a148cc0249, type: 3}
   spawn_rate: 2
   timer: 0
+--- !u!114 &1457987531
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1457987528}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 656d2ac49969270468ddd785b5189953, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1704383395
 GameObject:
   m_ObjectHideFlags: 0
@@ -1254,6 +1267,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   animator: {fileID: 2034629828}
+  hp: 10
+  dps: 2
+  attacked_enemies: []
 --- !u!1 &2143750880
 GameObject:
   m_ObjectHideFlags: 0
