@@ -24,6 +24,8 @@ public class attack : MonoBehaviour
 
     float test_timer;
 
+    HealthBar health_bar_script;
+
 
     void Start()
     {
@@ -32,8 +34,10 @@ public class attack : MonoBehaviour
         currentTarget = null;
         test_timer = 0;
         current_hp = hp;
-       
 
+        health_bar_script = this.transform.GetChild (0).gameObject.transform.GetChild (0).gameObject.GetComponentInParent<HealthBar>();
+       
+        health_bar_script.SetMaxHealth(hp);
         
     }
 
@@ -46,6 +50,7 @@ public class attack : MonoBehaviour
 
             if(currentTarget != null){
                 Attack(currentTarget);
+                health_bar_script.SetHealth(current_hp);
             }
             
             if (attacked_enemies.Count ==0 && is_attacking == true){

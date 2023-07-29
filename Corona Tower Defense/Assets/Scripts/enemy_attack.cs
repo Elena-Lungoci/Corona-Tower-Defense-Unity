@@ -16,12 +16,18 @@ public class enemy_attack : MonoBehaviour
 
     GameObject target;
     attack targetScript;
+
+    HealthBar health_bar_script;
     
 
     void Start()
     {
         current_hp = hp;
         target = null;
+
+        health_bar_script = this.transform.GetChild (0).gameObject.transform.GetChild (0).gameObject.GetComponentInParent<HealthBar>();
+
+        health_bar_script.SetMaxHealth(hp);
     }
 
     // Update is called once per frame
@@ -35,6 +41,7 @@ public class enemy_attack : MonoBehaviour
 
         if (target != null){
             Attack();
+            health_bar_script.SetHealth(current_hp); //this will be a problem against ranged attacks
         }
 
 

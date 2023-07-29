@@ -51,3 +51,9 @@ TagManager:
   - name: Towers
     uniqueID: 2440255111
     locked: 0
+  - name: Enemies
+    uniqueID: 2644189591
+    locked: 0
+  - name: hp
+    uniqueID: 2752988815
+    locked: 0
