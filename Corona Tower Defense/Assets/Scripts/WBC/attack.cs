@@ -12,7 +12,7 @@ public class attack : MonoBehaviour
 
     public float dps = 2;
 
-    public float current_hp =10;
+    public float current_hp;
 
     bool is_attacking;
 
@@ -22,12 +22,16 @@ public class attack : MonoBehaviour
 
     enemy_attack targetScript;
 
+    float test_timer;
+
 
     void Start()
     {
         is_attacking = false;
         attacked_enemies.Clear();
         currentTarget = null;
+        test_timer = 0;
+        current_hp = hp;
        
 
         
@@ -44,6 +48,12 @@ public class attack : MonoBehaviour
                 Attack(currentTarget);
             }
             
+            if (attacked_enemies.Count ==0 && is_attacking == true){
+            animator.SetBool("isAttacking", false); //for some reason doesn't turn off after killing unit
+            is_attacking = false;
+        }
+            
+            
     }
 
     private void OnTriggerEnter2D(Collider2D collision) {
@@ -55,6 +65,7 @@ public class attack : MonoBehaviour
             
             if (attacked_enemies.Count == 1){
                 SetCurrentTarget();
+
             }
     
         }
@@ -62,14 +73,17 @@ public class attack : MonoBehaviour
     }
     private void OnTriggerExit2D(Collider2D other) {
         if (attacked_enemies.Count ==0){
-            animator.SetBool("isAttacking", false);
+            animator.SetBool("isAttacking", false); //for some reason doesn't turn off after killing unit
             is_attacking = false;
         }
         
         
         attacked_enemies.Remove(other.gameObject);
 
-        SetCurrentTarget();
+        if (attacked_enemies.Count != 0){
+            SetCurrentTarget();
+        }
+        
     }
 
     private void Die(){
@@ -81,7 +95,7 @@ public class attack : MonoBehaviour
     private void Attack(GameObject target_enemy){
         targetScript.current_hp -= dps * Time.deltaTime;
 
-        Debug.Log(targetScript.current_hp);
+      
         
         
     }
