@@ -1,18 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using System.Linq;
 
-public class attack : MonoBehaviour //macrophage attack
+public class B_cell_attack : MonoBehaviour
 {
     // Start is called before the first frame update
     public Animator animator;
 
-    public float hp ;
-
-    public float dps;
-
-    public float current_hp;
+    
 
     bool is_attacking;
 
@@ -26,31 +21,37 @@ public class attack : MonoBehaviour //macrophage attack
 
     HealthBar health_bar_script;
 
+    B_cell_script bCellScript;
+
+    GameObject Bcell;
+
 
     void Start()
     {
+        Bcell = this.transform.parent.gameObject;
+        bCellScript = Bcell.GetComponent<B_cell_script>();
         is_attacking = false;
         attacked_enemies.Clear();
         currentTarget = null;
         test_timer = 0;
-        current_hp = hp;
+        bCellScript.current_hp = bCellScript.hp;
 
-        health_bar_script = this.transform.GetChild (0).gameObject.transform.GetChild (0).gameObject.GetComponentInParent<HealthBar>();
+        health_bar_script = Bcell.transform.GetChild (0).gameObject.transform.GetChild (0).gameObject.GetComponentInParent<HealthBar>();
        
-        health_bar_script.SetMaxHealth(hp);
+        health_bar_script.SetMaxHealth(bCellScript.hp);
         
     }
 
     // Update is called once per frame
     void Update()
     {
-            if(current_hp <= 0){
+            if(bCellScript.current_hp <= 0){
                 Die();
             }
 
             if(currentTarget != null){
                 Attack(currentTarget);
-                health_bar_script.SetHealth(current_hp);
+                health_bar_script.SetHealth(bCellScript.current_hp);
             }
             
             if (attacked_enemies.Count ==0 && is_attacking == true){
@@ -78,7 +79,7 @@ public class attack : MonoBehaviour //macrophage attack
     }
     private void OnTriggerExit2D(Collider2D other) {
         if (attacked_enemies.Count ==0){
-            animator.SetBool("isAttacking", false); 
+            animator.SetBool("isAttacking", false);
             is_attacking = false;
         }
         
@@ -94,11 +95,11 @@ public class attack : MonoBehaviour //macrophage attack
     private void Die(){
         attacked_enemies.Clear();
 
-        Destroy(gameObject);
+        Destroy(Bcell);
     }
 
     private void Attack(GameObject target_enemy){
-        targetScript.current_hp -= dps * Time.deltaTime;
+        targetScript.current_hp -= bCellScript.dps * Time.deltaTime;
 
       
         
