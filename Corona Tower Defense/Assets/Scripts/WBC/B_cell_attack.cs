@@ -21,7 +21,7 @@ public class B_cell_attack : MonoBehaviour
 
     HealthBar health_bar_script;
 
-    B_cell_script bCellScript;
+    Tower_script towerScript;
 
     GameObject Bcell;
 
@@ -29,29 +29,29 @@ public class B_cell_attack : MonoBehaviour
     void Start()
     {
         Bcell = this.transform.parent.gameObject;
-        bCellScript = Bcell.GetComponent<B_cell_script>();
+        towerScript = Bcell.GetComponent<Tower_script>();
         is_attacking = false;
         attacked_enemies.Clear();
         currentTarget = null;
         test_timer = 0;
-        bCellScript.current_hp = bCellScript.hp;
+        towerScript.current_hp = towerScript.hp;
 
         health_bar_script = Bcell.transform.GetChild (0).gameObject.transform.GetChild (0).gameObject.GetComponentInParent<HealthBar>();
        
-        health_bar_script.SetMaxHealth(bCellScript.hp);
+        health_bar_script.SetMaxHealth(towerScript.hp);
         
     }
 
     // Update is called once per frame
     void Update()
     {
-            if(bCellScript.current_hp <= 0){
+            if(towerScript.current_hp <= 0){
                 Die();
             }
 
             if(currentTarget != null){
                 Attack(currentTarget);
-                health_bar_script.SetHealth(bCellScript.current_hp);
+                health_bar_script.SetHealth(towerScript.current_hp);
             }
             
             if (attacked_enemies.Count ==0 && is_attacking == true){
@@ -99,7 +99,7 @@ public class B_cell_attack : MonoBehaviour
     }
 
     private void Attack(GameObject target_enemy){
-        targetScript.current_hp -= bCellScript.dps * Time.deltaTime;
+        targetScript.current_hp -= towerScript.dps * Time.deltaTime;
 
       
         

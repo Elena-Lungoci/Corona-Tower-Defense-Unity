@@ -8,12 +8,7 @@ public class attack : MonoBehaviour //macrophage attack
     // Start is called before the first frame update
     public Animator animator;
 
-    public float hp ;
-
-    public float dps;
-
-    public float current_hp;
-
+    
     bool is_attacking;
 
     public List<GameObject> attacked_enemies = new List<GameObject>();
@@ -26,31 +21,34 @@ public class attack : MonoBehaviour //macrophage attack
 
     HealthBar health_bar_script;
 
+    Tower_script towerScript;
+
 
     void Start()
     {
+        towerScript = this.GetComponent<Tower_script>();
         is_attacking = false;
         attacked_enemies.Clear();
         currentTarget = null;
         test_timer = 0;
-        current_hp = hp;
+        towerScript.current_hp = towerScript.hp;
 
         health_bar_script = this.transform.GetChild (0).gameObject.transform.GetChild (0).gameObject.GetComponentInParent<HealthBar>();
        
-        health_bar_script.SetMaxHealth(hp);
+        health_bar_script.SetMaxHealth(towerScript.hp);
         
     }
 
     // Update is called once per frame
     void Update()
     {
-            if(current_hp <= 0){
+            if(towerScript.current_hp <= 0){
                 Die();
             }
 
             if(currentTarget != null){
                 Attack(currentTarget);
-                health_bar_script.SetHealth(current_hp);
+                health_bar_script.SetHealth(towerScript.current_hp);
             }
             
             if (attacked_enemies.Count ==0 && is_attacking == true){
@@ -98,7 +96,7 @@ public class attack : MonoBehaviour //macrophage attack
     }
 
     private void Attack(GameObject target_enemy){
-        targetScript.current_hp -= dps * Time.deltaTime;
+        targetScript.current_hp -= towerScript.dps * Time.deltaTime;
 
       
         

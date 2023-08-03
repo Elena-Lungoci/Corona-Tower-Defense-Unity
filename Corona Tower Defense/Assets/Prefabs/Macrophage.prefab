@@ -13,7 +13,8 @@ GameObject:
   - component: {fileID: 115684481519019384}
   - component: {fileID: 115684481519019387}
   - component: {fileID: 115684481519019380}
-  m_Layer: 6
+  - component: {fileID: 7275595380892651740}
+  m_Layer: 7
   m_Name: Macrophage
   m_TagString: WBC
   m_Icon: {fileID: 0}
@@ -151,6 +152,21 @@ MonoBehaviour:
   dps: 2
   current_hp: 10
   attacked_enemies: []
+--- !u!114 &7275595380892651740
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 115684481519019391}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0a91ef40a83b0bb44ba82112566c2da3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hp: 10
+  dps: 2
+  current_hp: 10
 --- !u!1 &1143262884354206164
 GameObject:
   m_ObjectHideFlags: 0

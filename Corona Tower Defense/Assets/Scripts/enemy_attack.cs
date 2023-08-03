@@ -15,7 +15,7 @@ public class enemy_attack : MonoBehaviour
     public float dps;
 
     GameObject target;
-    attack targetScript;
+    Tower_script targetScript;
 
     HealthBar health_bar_script;
     
@@ -38,10 +38,11 @@ public class enemy_attack : MonoBehaviour
             target = null;
             Destroy(gameObject);
         }
+        health_bar_script.SetHealth(current_hp); //maybe not the best design
 
         if (target != null){
             Attack();
-            health_bar_script.SetHealth(current_hp); //this will be a problem against ranged attacks
+
         }
 
 
@@ -52,7 +53,9 @@ public class enemy_attack : MonoBehaviour
             previous_speed = animator.speed;
             animator.speed = 0;
             target = other.gameObject;
-            targetScript = target.GetComponent<attack>();
+            int tower_layer = other.gameObject.layer;
+
+            targetScript = target.GetComponent<Tower_script>(); //this is macrophage attack and here it becomes a problem
         }
     }
     private void OnTriggerExit2D(Collider2D other) {
