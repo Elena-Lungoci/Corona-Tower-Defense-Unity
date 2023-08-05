@@ -17,7 +17,7 @@ public class attack : MonoBehaviour //macrophage attack
 
     enemy_attack targetScript;
 
-    float test_timer;
+
 
     HealthBar health_bar_script;
 
@@ -30,7 +30,7 @@ public class attack : MonoBehaviour //macrophage attack
         is_attacking = false;
         attacked_enemies.Clear();
         currentTarget = null;
-        test_timer = 0;
+    
         towerScript.current_hp = towerScript.hp;
 
         health_bar_script = this.transform.GetChild (0).gameObject.transform.GetChild (0).gameObject.GetComponentInParent<HealthBar>();

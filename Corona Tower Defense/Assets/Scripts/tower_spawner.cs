@@ -10,16 +10,7 @@ public class tower_spawner : MonoBehaviour
     public GameObject placingTiles;
 
     int selected_tower = -1; //number of the tower to be spawned; -1 = no selected tower
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+   
 
     public void SelectTower(int tower_number){
         selected_tower = tower_number;
