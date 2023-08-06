@@ -8,6 +8,10 @@ public class Neutrophil_movement_script : MonoBehaviour
 
     public GameObject target;
     public Enemy_tracker enemyTracker;
+    public Animator animator;
+    public Rigidbody2D rb;
+
+    public float speed;
 
 
     //enemy distance
@@ -17,6 +21,14 @@ public class Neutrophil_movement_script : MonoBehaviour
     float neutrophil_y_position;
     float distance;
     float minDistance;
+    float target_x_position;
+    float target_y_position;
+    float y_position_difference;
+
+
+    Vector3 velocity;
+    
+
 
     
     void Start()
@@ -27,28 +39,33 @@ public class Neutrophil_movement_script : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+
+        velocity = rb.velocity;
+        
+
+
+
+        // target setting
         if(target  == null){
-            distance = 0; //reset distance and target value when enemy dies
+            minDistance = 0; 
             if(enemyTracker.alveoli_enemies.Count == 0){
                 //patrol
             }
             else{
-                //sets the target to be closest enemy
-                neutrophil_x_position = Mathf.Abs(this.transform.position.x);
-                neutrophil_y_position = Mathf.Abs(this.transform.position.y);
+                //sets the target to be closest enemy 
+                UpdateCurrentPosition();
 
                 
 
                 foreach(GameObject enemy in enemyTracker.alveoli_enemies){
-                    enemy_x_position = Mathf.Abs(enemy.transform.position.x);
-                    enemy_y_position = Mathf.Abs(enemy.transform.position.y);
+                    enemy_x_position = enemy.transform.position.x;
+                    enemy_y_position = enemy.transform.position.y;
                    
 
                     distance = DetermineDistance(enemy_x_position, enemy_y_position, neutrophil_x_position, neutrophil_y_position);
                     if (minDistance == 0 || distance < minDistance){
                         minDistance = distance;
                         target = enemy;
-                        Debug.Log("target set");
                     }
                     
                     
@@ -66,7 +83,29 @@ public class Neutrophil_movement_script : MonoBehaviour
             }
         }
         else{
-            //follows target
+            UpdateCurrentPosition();
+            UpdateTargetPosition();
+
+            y_position_difference = Mathf.Abs(neutrophil_y_position - target_y_position);
+
+            if(neutrophil_y_position < target_y_position && y_position_difference>= 0.1){
+                //move up
+                transform.Translate(Vector3.up * Time.deltaTime * speed);
+                
+
+
+
+                
+            }
+            else if (neutrophil_y_position > target_y_position && y_position_difference>= 0.1){
+                //move down
+                transform.Translate(Vector3.down * Time.deltaTime * speed);
+            }
+            else{
+                //move left or right
+                Debug.Log("On the same line");
+            }
+            
         }
     }
     
@@ -86,5 +125,13 @@ public class Neutrophil_movement_script : MonoBehaviour
 
         
         
+    }
+    void UpdateCurrentPosition(){
+        neutrophil_x_position = this.transform.position.x;
+        neutrophil_y_position = this.transform.position.y;
+    } 
+    void UpdateTargetPosition(){
+        target_x_position = target.transform.position.x;
+        target_y_position = target.transform.position.y;
     }
 }
