@@ -23,6 +23,6 @@ public class Enemy_tracker : MonoBehaviour
     }
 
     private void OnTriggerExit2D(Collider2D other){
-        alveoli_enemies.Remove(other.gameObject);
+        //alveoli_enemies.Remove(other.gameObject);
     }
 }

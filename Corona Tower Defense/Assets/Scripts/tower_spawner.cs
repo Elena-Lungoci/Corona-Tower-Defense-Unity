@@ -15,7 +15,7 @@ public class tower_spawner : MonoBehaviour
     public void SelectTower(int tower_number){
         selected_tower = tower_number;
         placingTiles.SetActive(true);
-        Debug.Log(selected_tower);
+       
 
 
     }
@@ -23,7 +23,7 @@ public class tower_spawner : MonoBehaviour
     public void DeselectTower(){    
         selected_tower = -1;
         placingTiles.SetActive(false);
-        Debug.Log("tower deselected");
+       
 
         // make it deselect when square not pressed
     }

@@ -9,7 +9,7 @@ public class Neutrophil_movement_script : MonoBehaviour
     public GameObject target;
     public Enemy_tracker enemyTracker;
     public Animator animator;
-    public Rigidbody2D rb;
+
 
     public float speed;
 
@@ -26,7 +26,10 @@ public class Neutrophil_movement_script : MonoBehaviour
     float y_position_difference;
 
 
-    Vector3 velocity;
+
+
+
+
     
 
 
@@ -39,9 +42,6 @@ public class Neutrophil_movement_script : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
-        velocity = rb.velocity;
-        
 
 
 
@@ -58,15 +58,22 @@ public class Neutrophil_movement_script : MonoBehaviour
                 
 
                 foreach(GameObject enemy in enemyTracker.alveoli_enemies){
-                    enemy_x_position = enemy.transform.position.x;
-                    enemy_y_position = enemy.transform.position.y;
-                   
-
-                    distance = DetermineDistance(enemy_x_position, enemy_y_position, neutrophil_x_position, neutrophil_y_position);
-                    if (minDistance == 0 || distance < minDistance){
-                        minDistance = distance;
-                        target = enemy;
+                    if(enemy == null){
+                        //do nothing
                     }
+
+                    else{
+                        enemy_x_position = enemy.transform.position.x;
+                        enemy_y_position = enemy.transform.position.y;
+                    
+
+                        distance = DetermineDistance(enemy_x_position, enemy_y_position, neutrophil_x_position, neutrophil_y_position);
+                        if (minDistance == 0 || distance < minDistance){
+                            minDistance = distance;
+                            target = enemy;
+                        }
+                    }
+                    
                     
                     
 
@@ -91,6 +98,7 @@ public class Neutrophil_movement_script : MonoBehaviour
             if(neutrophil_y_position < target_y_position && y_position_difference>= 0.1){
                 //move up
                 transform.Translate(Vector3.up * Time.deltaTime * speed);
+                animator.SetInteger("ySpeed", 1);
                 
 
 
@@ -100,10 +108,11 @@ public class Neutrophil_movement_script : MonoBehaviour
             else if (neutrophil_y_position > target_y_position && y_position_difference>= 0.1){
                 //move down
                 transform.Translate(Vector3.down * Time.deltaTime * speed);
+                animator.SetInteger("ySpeed", -1);
             }
             else{
-                //move left or right
-                Debug.Log("On the same line");
+                //move left or right or attack
+               
             }
             
         }
@@ -134,4 +143,6 @@ public class Neutrophil_movement_script : MonoBehaviour
         target_x_position = target.transform.position.x;
         target_y_position = target.transform.position.y;
     }
+
+  
 }

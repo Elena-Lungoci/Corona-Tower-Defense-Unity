@@ -18,7 +18,7 @@ public class spawn_tower : MonoBehaviour
     }
     void OnMouseDown(){
         tower_spawner_script.Spawn_Tower(this.transform.position);
-
+        Debug.Log("spawning tower");
         //make it unable to spawn a second tower on the same square
     }
 }
