@@ -18,6 +18,8 @@ public class enemy_attack : MonoBehaviour
     Tower_script targetScript;
 
     HealthBar health_bar_script;
+
+    public Enemy_tracker enemyTracker;
     
 
     void Start()
@@ -28,6 +30,9 @@ public class enemy_attack : MonoBehaviour
         health_bar_script = this.transform.GetChild (0).gameObject.transform.GetChild (0).gameObject.GetComponentInParent<HealthBar>();
 
         health_bar_script.SetMaxHealth(hp);
+        enemyTracker = GameObject.FindGameObjectWithTag("alveoli_terrain").GetComponent<Enemy_tracker>();
+
+        
     }
 
     // Update is called once per frame
@@ -36,6 +41,7 @@ public class enemy_attack : MonoBehaviour
         if (current_hp <= 0){
             
             target = null;
+            enemyTracker.alveoli_enemies.Remove(this.gameObject); //if one day enemies can die in lungs screen, check if in lungs or not
             Destroy(gameObject);
         }
         health_bar_script.SetHealth(current_hp); //maybe not the best design

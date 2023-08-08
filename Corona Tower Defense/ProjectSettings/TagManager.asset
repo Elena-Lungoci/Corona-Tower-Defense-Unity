@@ -8,6 +8,7 @@ TagManager:
   - Enemy
   - WBC
   - Logic
+  - alveoli_terrain
   layers:
   - Default
   - TransparentFX

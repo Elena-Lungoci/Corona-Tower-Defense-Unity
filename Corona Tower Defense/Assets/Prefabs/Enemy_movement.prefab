@@ -342,6 +342,7 @@ MonoBehaviour:
   hp: 10
   current_hp: 0
   dps: 1
+  enemyTracker: {fileID: 0}
 --- !u!1 &6206175461309632662
 GameObject:
   m_ObjectHideFlags: 0

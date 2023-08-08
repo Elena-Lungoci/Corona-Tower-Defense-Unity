@@ -10,6 +10,7 @@ public class Neutrophil_movement_script : MonoBehaviour
     public Enemy_tracker enemyTracker;
     public Animator animator;
 
+    public Tower_script towerScript;
 
     public float speed;
 
@@ -24,8 +25,12 @@ public class Neutrophil_movement_script : MonoBehaviour
     float target_x_position;
     float target_y_position;
     float y_position_difference;
+    float x_position_difference;
 
 
+    float originalScale;
+
+    enemy_attack targetScript;
 
 
 
@@ -37,14 +42,20 @@ public class Neutrophil_movement_script : MonoBehaviour
     void Start()
     {
         target = null;
+
+        originalScale = this.transform.localScale.x;
+        towerScript = this.GetComponent<Tower_script>();
+        towerScript.current_hp = towerScript.hp;
+        
     }
 
     // Update is called once per frame
     void Update()
     {
-
-
-
+        
+        if (towerScript.current_hp <= 0){
+            Destroy(this);
+        }
         // target setting
         if(target  == null){
             minDistance = 0; 
@@ -71,6 +82,7 @@ public class Neutrophil_movement_script : MonoBehaviour
                         if (minDistance == 0 || distance < minDistance){
                             minDistance = distance;
                             target = enemy;
+                            
                         }
                     }
                     
@@ -78,6 +90,7 @@ public class Neutrophil_movement_script : MonoBehaviour
                     
 
                 }
+                targetScript = target.GetComponent<enemy_attack>();
 
 
 
@@ -97,25 +110,47 @@ public class Neutrophil_movement_script : MonoBehaviour
 
             if(neutrophil_y_position < target_y_position && y_position_difference>= 0.1){
                 //move up
-                transform.Translate(Vector3.up * Time.deltaTime * speed);
-                animator.SetInteger("ySpeed", 1);
+                MoveUp();
                 
-
-
-
                 
             }
             else if (neutrophil_y_position > target_y_position && y_position_difference>= 0.1){
                 //move down
-                transform.Translate(Vector3.down * Time.deltaTime * speed);
-                animator.SetInteger("ySpeed", -1);
+                MoveDown();
             }
-            else{
+
+
+            else{ //if its already on same line
                 //move left or right or attack
+                x_position_difference = Mathf.Abs(neutrophil_x_position-target_x_position);
+                if(neutrophil_x_position < target_x_position && x_position_difference>= 0.1){
+                    //move right
+                    MoveRight();
+                    
+                    
+                }
+                else if (neutrophil_x_position > target_x_position && x_position_difference>= 0.1){
+                    //move left
+                    MoveLeft();
+                }
+                else{
+                    //attack
+                    Attack();
+                }
                
+
             }
             
         }
+    }
+    
+
+    void Attack(){
+        targetScript.current_hp -= towerScript.dps * Time.deltaTime;
+        animator.SetInteger("xSpeed", 0);
+        animator.SetInteger("ySpeed", 0);
+        animator.SetBool("isAttacking", true);
+        
     }
     
     float DetermineDistance(float xPosition1, float yPosition1, float xPosition2, float yPosition2){
@@ -142,6 +177,36 @@ public class Neutrophil_movement_script : MonoBehaviour
     void UpdateTargetPosition(){
         target_x_position = target.transform.position.x;
         target_y_position = target.transform.position.y;
+    }
+
+    void MoveLeft(){
+        transform.Translate(Vector3.left * Time.deltaTime * speed);
+        animator.SetInteger("xSpeed", -1);
+        animator.SetInteger("ySpeed", 0);
+        animator.SetBool("isAttacking", false);
+       
+        
+    }
+    void MoveRight(){
+        transform.Translate(Vector3.right * Time.deltaTime * speed);
+        animator.SetInteger("xSpeed", 1);
+        animator.SetInteger("ySpeed", 0);
+        animator.SetBool("isAttacking", false);
+        
+    }
+    void MoveUp(){
+        transform.Translate(Vector3.up * Time.deltaTime * speed);
+        animator.SetInteger("xSpeed", 0);
+        animator.SetInteger("ySpeed", 1);
+        animator.SetBool("isAttacking", false);
+        
+    }
+    void MoveDown(){
+        transform.Translate(Vector3.down * Time.deltaTime * speed);
+        animator.SetInteger("xSpeed", 0);
+        animator.SetInteger("ySpeed", -1);
+        animator.SetBool("isAttacking", false);
+        
     }
 
   

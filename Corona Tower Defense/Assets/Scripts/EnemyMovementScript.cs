@@ -27,6 +27,7 @@ public class EnemyMovementScript : MonoBehaviour
 
     public void ReachedTheEnd(){ //when reaching the end of alveoli
         // increase humidity
+        //remove from alveoli enemies list
 
         Destroy(gameObject);
     }
