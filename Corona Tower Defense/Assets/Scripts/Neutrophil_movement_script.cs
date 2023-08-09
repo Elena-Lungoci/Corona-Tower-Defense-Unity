@@ -31,6 +31,7 @@ public class Neutrophil_movement_script : MonoBehaviour
     float originalScale;
 
     enemy_attack targetScript;
+    HealthBar health_bar_script;
 
 
 
@@ -43,18 +44,21 @@ public class Neutrophil_movement_script : MonoBehaviour
     {
         target = null;
 
-        originalScale = this.transform.localScale.x;
-        towerScript = this.GetComponent<Tower_script>();
+        towerScript = this.transform.GetChild (1).gameObject.GetComponent<Tower_script>();
         towerScript.current_hp = towerScript.hp;
-        
+        health_bar_script = this.transform.GetChild (0).gameObject.transform.GetChild (0).gameObject.GetComponentInParent<HealthBar>();
+        health_bar_script.SetMaxHealth(towerScript.hp);
+
+        enemyTracker = GameObject.FindGameObjectWithTag("alveoli_terrain").GetComponent<Enemy_tracker>();
+
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        health_bar_script.SetHealth(towerScript.current_hp);
         if (towerScript.current_hp <= 0){
-            Destroy(this);
+            Destroy(gameObject);
         }
         // target setting
         if(target  == null){
